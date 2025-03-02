@@ -22,28 +22,16 @@ class modPopStrap
 		console.log(this.config);
 		if(this.config.title || this.config.closeable)
 		{
-			console.log(this.config.title);
 			var colour="";
-			if(typeof this.config.title.colourscheme!="undefined")
-			{
-				colour=` text-bg-`+this.config.title.colourscheme;
-			}
-			container.find(".modal-content").append(`<div class="modal-header` + colour + `"></div>`);
 			if(this.config.title)
 			{
-				if(this.config.title.icon)
+				if("colourscheme" in this.config.title)
 				{
-					container.find(".modal-header").append(`<i class="fs-5 me-2 bi bi-${this.config.title.icon}"></i>`);
-				}
-				if(this.config.title.text)
-				{
-					container.find(".modal-header").append(`<h1 class="flex-grow-1 fs-5 modal-title">${this.config.title.text}</h1>`);
+					colour=" text-bg-"+this.config.title.colourscheme;
 				}
 			}
-			if(this.config.closeable)
-			{
-				container.find(".modal-header").append(`<button style="color:inherit" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>`);
-			}
+			container.find(".modal-content").append(`<div class="modal-header` + colour + `"></div>`);
+			this.title(this.config.title,this.config.closeable);
 		}
 		if(this.config.content)
 		{
@@ -78,6 +66,29 @@ class modPopStrap
 			}
 		}
 	}
+	title(titleconfig,closeable)
+	{
+		if(titleconfig)
+		{
+			
+			if(titleconfig)
+			{
+				if(titleconfig.icon)
+				{
+					$(`#${this.id} .modal-header`).append(`<i class="align-self-start fs-5 me-2 bi bi-${titleconfig.icon}"></i>`);
+				}
+				if(titleconfig.text)
+				{
+					$(`#${this.id} .modal-header`).append(`<h1 class="flex-grow-1 fs-5 modal-title">${titleconfig.text}</h1>`);
+				}
+			}
+		}
+		if(closeable)
+		{
+			$(`#${this.id} .modal-header`).append(`<i  type="button" data-bs-dismiss="modal" aria-label="Close" class="align-self-start bi fs-5 bi-x-lg"></i>  `);
+		}
+	}
+	
 	content(contentconfig)
 	{
 		if(contentconfig.contentType=="html")
