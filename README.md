@@ -1,24 +1,30 @@
 # modPopStrap
 Programmatically invoke Bootstrap (5.3) modal popups
 
-## syntax
+## Create a new Modal
 
 ```
 modal=new modPopStrap(config);
 modal.create(uniqueid);
-modal.show();
-modal.hide();
-modal.dispose();  // hide and remove from the DOM
+```
+### Once the modal has been created:
+```
+modal.show();			// to show the modal
+modal.hide();			// to hide the modal
+modal.dispose();  		// to hide the modal and remove it from the DOM
+modal.title(config); 		// to modify just the title (use the title part of the config shown in the full config example below)
+modal.content(config) 		// to modify just the body of the mdoal
+modal.footer(config);		// to modify just the footer od the modal
 ```
 ## Live Examples
 Try the [online configurator](https://spbcodes.online/modPopStrap)
 
 ## configuration example
-You don't have to specify such a large config - many settings have defaults. This is just an example to show the configurable parameters.
+You don't have to specify such a large config - many settings have defaults. This is just an example to show the configurable parameters. Use the configurator link above to generate configuration objects.
 ```
 {
 	"closeable":true,              		// default: true  - a close button will be displayed that will hide the modal
-	"size":"sm",                   		// default is md
+	"size":"sm",                   		// default: if undeclared the default is effectively md
 	"fade":true,                   		// default is true - the modal will fade in and out 
 	"keyboard":false,              		// default is true - pressing esc on keyboard will hide the modal
 	"backdrop":"static",           		// default is true - the modal will have a backdrop and clicking outside will hide the modal.
