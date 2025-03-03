@@ -18,19 +18,10 @@ class modPopStrap
 			return false;
 		}
 		this.id=id;
-		var container=$("body").prepend(`<div id="${this.id}" class="modal ` + ((this.config.fade) ? "fade" : "") + `"` + ( typeof this.config.keyboard=="undefined" || (this.config.keyboard) ? ` data-bs-keyboard="true"` : `data-bs-keyboard="false" `) + ( typeof this.config.focus=="undefined" || (this.config.focus) ? ` data-bs-focus="true"` : `data-bs-focus="false" `) + ((typeof this.config.backdrop!="undefined" || this.config.backdrop) ? ` data-bs-backdrop="`+(this.config.backdrop)+`"` : `data-bs-backdrop="false" `) + ` tabindex="-1" role="dialog"><div class="modal-dialog `+ ((typeof this.config.size=="undefined" || this.config.size=="md") ? `` : `modal-${this.config.size}`) + `" role="document"><div class="modal-content"></div></div></div>`); 
-		console.log(this.config);
+		$("body").prepend(`<div id="${this.id}" class="modal ` + ((this.config.fade) ? "fade" : "") + `"` + ( typeof this.config.keyboard=="undefined" || (this.config.keyboard) ? ` data-bs-keyboard="true"` : `data-bs-keyboard="false" `) + ( typeof this.config.focus=="undefined" || (this.config.focus) ? ` data-bs-focus="true"` : `data-bs-focus="false" `) + ((typeof this.config.backdrop!="undefined" || this.config.backdrop) ? ` data-bs-backdrop="`+(this.config.backdrop)+`"` : `data-bs-backdrop="false" `) + ` tabindex="-1" role="dialog"><div class="modal-dialog `+ ((typeof this.config.size=="undefined" || this.config.size=="md") ? `` : `modal-${this.config.size}`) + `" role="document"><div class="modal-content"></div></div></div>`); 
+		this.container=$(`#${this.id}`);
 		if(this.config.title || this.config.closeable)
 		{
-			var colour="";
-			if(this.config.title)
-			{
-				if("colourscheme" in this.config.title)
-				{
-					colour=" text-bg-"+this.config.title.colourscheme;
-				}
-			}
-			container.find(".modal-content").append(`<div class="modal-header` + colour + `"></div>`);
 			this.title(this.config.title,this.config.closeable);
 		}
 		if(this.config.content)
@@ -43,57 +34,66 @@ class modPopStrap
 		}
 		if(this.config.events)
 		{
+			
 			var that=this.config.events;
 			if(typeof this.config.events.onhide=="function")
 			{
-				$(`#${this.id}`).on("hide.bs.modal",function() { that.onhide(); } );
+				this.container.on("hide.bs.modal",function() { that.onhide(); } );
 			}
 			if(typeof this.config.events.onhidden=="function")
 			{
-				$(`#${this.id}`).on("hidden.bs.modal",function() { that.onhidden(); } );
+				this.container.on("hidden.bs.modal",function() { that.onhidden(); } );
 			}
 			if(typeof this.config.events.onshow=="function")
 			{
-				$(`#${this.id}`).on("show.bs.modal",function() { that.onshow(); } );
+				this.container.on("show.bs.modal",function() { that.onshow(); } );
 			}
 			if(typeof this.config.events.onshown=="function")
 			{
-				$(`#${this.id}`).on("shown.bs.modal",function() { that.onshown(); } );
+				this.container.on("shown.bs.modal",function() { that.onshown(); } );
 			}
 			if(typeof this.config.events.onprevented=="function")
 			{
-				$(`#${this.id}`).on("hidePrevented.bs.modal",function() { that.onprevented(); } );
+				this.container.on("hidePrevented.bs.modal",function() { that.onprevented(); } );
 			}
 		}
 	}
 	title(titleconfig,closeable)
 	{
 		if(titleconfig)
-		{
+		{	
+			var colour="";
 			
-			if(titleconfig)
+			if("colourscheme" in titleconfig)
 			{
-				if(titleconfig.icon)
-				{
-					$(`#${this.id} .modal-header`).append(`<i class="align-self-start fs-5 me-2 bi bi-${titleconfig.icon}"></i>`);
-				}
-				if(titleconfig.text)
-				{
-					$(`#${this.id} .modal-header`).append(`<h1 class="flex-grow-1 fs-5 modal-title">${titleconfig.text}</h1>`);
-				}
+				colour=" text-bg-"+titleconfig.colourscheme;
 			}
+			this.container.find(".modal-content .modal-header").remove();
+			this.container.find(".modal-content").prepend(`<div class="modal-header` + colour + `"></div>`);
+			if(titleconfig.icon)
+			{
+				this.container.find(`.modal-header i`).not(`.closeable`).remove();
+				this.container.find(`.modal-header`).append(`<i class="align-self-start fs-5 me-2 bi bi-${titleconfig.icon}"></i>`);
+			}
+			if(titleconfig.text)
+			{
+				this.container.find(`.modal-header h1`).remove();
+				this.container.find(`.modal-header`).append(`<h1 class="flex-grow-1 fs-5 modal-title">${titleconfig.text}</h1>`);
+			}
+			
 		}
 		if(closeable)
-		{
-			$(`#${this.id} .modal-header`).append(`<i  type="button" data-bs-dismiss="modal" aria-label="Close" class="align-self-start bi fs-5 bi-x-lg"></i>  `);
+		{	
+			this.container.find(`.modal-header i.closeable`).remove();
+			this.container.find(`.modal-header`).append(`<i  data-bs-dismiss="modal" aria-label="Close" class="closeable align-self-start bi fs-5 bi-x-lg"></i>  `);
 		}
-	}
-	
+	}	
 	content(contentconfig)
 	{
+		this.container.find(`.modal-content .modal-body`).remove();
 		if(contentconfig.contentType=="html")
 		{
-			$(`#${this.id} .modal-content`).append(`<div class="modal-body">${contentconfig.content}</div>`);
+			this.insertcontent(contentconfig);
 		}
 		else
 		{
@@ -103,7 +103,6 @@ class modPopStrap
 	getajaxcontent(ajaxconfig)
 	{
 		var that=this;
-		$(`#${that.id} .modal-content`).append(`<div class="modal-body"></div>`);
 		if(typeof ajaxconfig.ajaxMethod=="undefined" || ajaxconfig.ajaxMethod==null) { ajaxconfig.ajaxMethod="POST"; };
 		if(typeof ajaxconfig.ajaxURL=="undefined" || ajaxconfig.ajaxURL==null)
 		{
@@ -119,46 +118,61 @@ class modPopStrap
 		}
 		$.ajax(ajaxconnect).done(function(response)
 			{
-				$(`#${that.id} .modal-content .modal-body`).append(`${response}`);
+				ajaxconfig["type"]="html";
+				ajaxconfig["content"]=response;
+				that.insertcontent(ajaxconfig);
 			}).fail(function(e)
 			{
 				console.log("The request returned an error : " + e.error);
 			});
 	}
+	insertcontent(contentconfig)
+	{
+		if(this.container.find(".modal-footer").length>0)
+		{
+			this.container.find(`.modal-footer`).before(`<div class="modal-body">${contentconfig.content}</div>`);
+		}
+		else
+		{
+			this.container.find(`.modal-content`).append(`<div class="modal-body">${contentconfig.content}</div>`);
+		}	
+	}
 	footer(footerconfig)
 	{
+		this.container.find(`.modal-content div.modal-footer`).remove();
 		if(footerconfig.type=="buttons")
 		{
 			var that=this;	
-			$(`#${this.id} .modal-content`).append(`<div class="modal-footer"></div>`);
+			
+			$this.container.find(`.modal-content`).append(`<div class="modal-footer"></div>`);
 			$(footerconfig.detail).each(function(a,b)
 				{
-					$(`#${that.id} .modal-footer`).append(`<button class="btn btn-${b.colour}">${b.label}</button>`);
+					that.container.find(`.modal-footer`).append(`<button class="btn btn-${b.colour}">${b.label}</button>`);
 					if(typeof b.action=="function")
 					{
-						$(`#${that.id} .modal-footer .btn`).last(".btn").on("click",function() { b.action(); });
+						that.container.find(`.modal-footer .btn`).last(".btn").on("click",function() { b.action(); });
 					}
 				});
 		}
 		else
 		{
-			$(`#${this.id} .modal-content`).append(`<div class="modal-footer">${footerconfig.detail}</div>`);
+			this.container.find(`.modal-content`).append(`<div class="modal-footer">${footerconfig.detail}</div>`);
 		}
 	}
 	show()
 	{
-		$(`#${this.id}`).modal("show");
+		this.container.modal("show");
 	}
 	hide()
 	{
-		$(`#${this.id}`).modal("hide");
+		this.container.modal("hide");
 	}
 	dispose(refresh)
 	{
 		this.hide();
 		var id=this.id
 		setTimeout(function() {
-			$(`#${id}`).remove();
+			this.container.remove();
 		},300);
 		if(refresh)
 		{
