@@ -144,7 +144,7 @@ class modPopStrap
 		{
 			var that=this;	
 			
-			$this.container.find(`.modal-content`).append(`<div class="modal-footer"></div>`);
+			this.container.find(`.modal-content`).append(`<div class="modal-footer"></div>`);
 			$(footerconfig.detail).each(function(a,b)
 				{
 					that.container.find(`.modal-footer`).append(`<button class="btn btn-${b.colour}">${b.label}</button>`);
