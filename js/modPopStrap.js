@@ -60,6 +60,8 @@ class modPopStrap
 	}
 	title(titleconfig,closeable)
 	{
+		
+		
 		if(titleconfig)
 		{	
 			var colour="";
@@ -68,6 +70,7 @@ class modPopStrap
 			{
 				colour=" text-bg-"+titleconfig.colourscheme;
 			}
+			
 			this.container.find(".modal-content .modal-header").remove();
 			this.container.find(".modal-content").prepend(`<div class="modal-header` + colour + `"></div>`);
 			if(titleconfig.icon)
@@ -84,8 +87,15 @@ class modPopStrap
 		}
 		if(closeable)
 		{	
-			this.container.find(`.modal-header i.closeable`).remove();
-			this.container.find(`.modal-header`).append(`<i  data-bs-dismiss="modal" aria-label="Close" class="closeable align-self-start bi fs-5 bi-x-lg"></i>  `);
+			if(this.container.find(".modal-header").length==0)
+			{
+				this.container.find(".modal-content").prepend(`<div class="modal-header"></div>`);
+			}
+			else
+			{
+				this.container.find(".modal-content .modal-header i.closeable").remove();
+			}
+			this.container.find(`.modal-header`).append(`<i  data-bs-dismiss="modal" aria-label="Close" class="closeable align-self-start ms-auto bi fs-5 bi-x-lg"></i>  `);
 		}
 	}	
 	content(contentconfig)
