@@ -19,8 +19,8 @@ modal.footer(config);		// to modify just the footer od the modal
 ## Live Examples
 Try the [online configurator](https://spbcodes.online/modPopStrap)
 
-## configuration example
-You don't have to specify such a large config - many settings have defaults. This is just an example to show the configurable parameters. Use the configurator link above to generate configuration objects.
+## Configuration example
+You don't have to specify such a large config - many settings have defaults. This is just an example to show the configurable parameters. Use the [online configurator](https://spbcodes.online/modPopStrap) to generate configuration objects.
 ```
 {
 	"closeable":true,              		// default: true  - a close button will be displayed that will hide the modal
