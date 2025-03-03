@@ -10,6 +10,8 @@ modal.show();
 modal.hide();
 modal.dispose();  // hide and remove from the DOM
 ```
+## Live Examples
+Try the [online configurator](https://spbcodes.online/modPopStrap)
 
 ## configuration example
 You don't have to specify such a large config - many settings have defaults. This is just an example to show the configurable parameters.
