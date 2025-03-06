@@ -4,23 +4,30 @@ Programmatically invoke Bootstrap (5.3) modal popups
 ## Create a new Modal
 
 ```
-modal=new modPopStrap(config);
-modal.create(uniqueid);
+myModal=new modPopStrap(config);
+myModal.create(uniqueid);
 ```
 ### Once the modal has been created:
 ```
-modal.show();			// to show the modal
-modal.hide();			// to hide the modal
-modal.dispose();  		// to hide the modal and remove it from the DOM
-modal.title(config); 		// to modify just the title (use the title part of the config shown in the full config example below)
-modal.content(config) 		// to modify just the body of the mdoal
-modal.footer(config);		// to modify just the footer od the modal
+myModal.show();			// to show the modal
+myModal.hide();			// to hide the modal
+myModal.dispose();  		// to hide the modal and remove it from the DOM
+myModal.title(config); 		// to modify just the title (use the title part of the config shown in the full config example below)
+myModal.content(config) 		// to modify just the body of the mdoal
+myModal.footer(config);		// to modify just the footer od the modal
 ```
 ## Live Examples
 Try the [online configurator](https://spbcodes.online/modPopStrap)
 
 ## Configuration example
 You don't have to specify such a large config - many settings have defaults. This is just an example to show the configurable parameters. Use the [online configurator](https://spbcodes.online/modPopStrap) to generate configuration objects.
+
+To apply methods to the modal from events in the modal, use "modal." in your javascript with the relevant method and its attributes.
+
+* modal.hide();
+* modal.title({"icon":"newicon","text":"New Title","colourscheme":"newScheme"});
+
+
 ```
 {
 	"closeable":true,              		// default: true  - a close button will be displayed that will hide the modal
