@@ -40,13 +40,14 @@ To apply methods to the modal from events in the modal, use "modal." in your jav
 	{
 		"icon":"exclamation-circle",	// requires Bootstrap icons.
 		"text":"Warning!",
-		"colourscheme":"danger",	// uses Bootstrap 5.3 text-bg- helpers to set background and appropriate foreground
+		"colourscheme":"danger"		// uses Bootstrap 5.3 text-bg- helpers to set background and appropriate foreground
 	},
 	"content":				// modal body content
 	{
 		"contentType":"file",		// or "contentType":"html",
-		"ajaxURL":"ajax.php"		// or "content":"Content to display in modal body",
-		"ajaxMethod":"POST"		// default is POST
+		"ajaxURL":"ajax.php",		// or "content":"Content to display in modal body",
+		"ajaxMethod":"POST",		// default is POST - only used if contentType = "file"
+		"ajaxData":{"id":123}		// data to sent with the request  - only used if contentType = "file"
 	},
 	"footer":                      		// modal footer content
 	{
@@ -68,8 +69,8 @@ To apply methods to the modal from events in the modal, use "modal." in your jav
 			}
 		]
 	},
-	"events":                     		  // attach custom actions to Bootstrap standard events
-	{
+	"events":				// attach custom actions to Bootstrap standard events
+	{					// read more here: https://getbootstrap.com/docs/5.3/components/modal/#events
 		"onhide":function() { console.log("Hiding"); },
 		"onhidden":function() { console.log("Hidden"); },
 		"onprevented":function() { console.log("Prevented"); },
