@@ -13,7 +13,7 @@ myModal.show();			// to show the modal
 myModal.hide();			// to hide the modal
 myModal.dispose();  		// to hide the modal and remove it from the DOM
 myModal.title(config); 		// to modify just the title (use the title part of the config shown in the full config example below)
-myModal.content(config) 		// to modify just the body of the mdoal
+myModal.content(config) 	// to modify just the body of the mdoal
 myModal.footer(config);		// to modify just the footer od the modal
 ```
 ## Live Examples
