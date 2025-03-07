@@ -34,7 +34,6 @@ class modPopStrap
 		}
 		if(this.config.events)
 		{
-			modal=this;
 			var that=this.config.events;
 			if(typeof this.config.events.onhide=="function")
 			{
@@ -149,7 +148,6 @@ class modPopStrap
 	}
 	footer(footerconfig)
 	{
-		modal=this;
 		this.container.find(`.modal-content div.modal-footer`).remove();
 		if(footerconfig.type=="buttons")
 		{
