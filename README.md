@@ -22,12 +22,6 @@ Try the [online configurator](https://spbcodes.online/modPopStrap)
 ## Configuration example
 You don't have to specify such a large config - many settings have defaults. This is just an example to show the configurable parameters. Use the [online configurator](https://spbcodes.online/modPopStrap) to generate configuration objects.
 
-To apply methods to the modal from events in the modal, use "thisModal." in your javascript with the relevant method and its attributes e.g.:
-
-* thisModal.hide();
-* thisModal.title({"icon":"newicon","text":"New Title","colourscheme":"newScheme"});
-
-
 ```
 {
 	"closeable":true,              		// default: true  - a close button will be displayed that will hide the modal
