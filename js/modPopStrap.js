@@ -156,10 +156,11 @@ class modPopStrap
 			this.container.find(`.modal-content`).append(`<div class="modal-footer"></div>`);
 			$(footerconfig.detail).each(function(a,b)
 				{
-					that.container.find(`.modal-footer`).append(`<button class="btn btn-${b.colour}">${b.label}</button>`);
+					var buttoncolour=((typeof b.colour=="undefined") ? `` : `btn-${b.colour}`);
+					that.container.find(`.modal-footer`).append(`<button class="btn ${buttoncolour}">${b.label}</button>`);
 					if(typeof b.action=="function")
 					{
-						that.container.find(`.modal-footer .btn`).last(".btn").on("click",function() { b.action(); });
+						that.container.find(`.modal-footer .btn`).last(".btn").on("click",function() { b.action(); }.bind(that));
 					}
 				});
 		}
@@ -174,6 +175,9 @@ class modPopStrap
 	}
 	hide()
 	{
+		if (document.activeElement) {
+			document.activeElement.blur();
+		}
 		this.container.modal("hide");
 	}
 	dispose(refresh)
